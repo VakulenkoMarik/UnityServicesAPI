@@ -1,0 +1,111 @@
+C# Code Style Playbook (AI Ruleset)
+
+1. General Style Rules
+- Follow standard C# Coding Conventions.
+- All class names, struct names, method names, properties, and public members use PascalCase.
+Example: UserService, GetUserProfile().
+- Private fields use camelCase.
+Example: bufferSize, currentIndex.
+
+2. Braces and Formatting
+- Opening brace { is always placed on the same line as the method, class, interface, or control statement.
+- Line break after { and before } is mandatory.
+Example:
+
+public void DoWork() {
+    Console.WriteLine("Working...");
+}
+
+- Indentation uses 4 spaces (no tabs).
+
+3. Access Modifiers
+- Every method must explicitly specify an access modifier, including private ones.
+- Private methods must not omit private.
+
+✔ Correct:
+
+private void Calculate() {
+    // ...
+}
+
+
+❌ Incorrect:
+
+void Calculate() {
+    // ...
+}
+
+4. Naming Rules
+4.1. Classes and Interfaces
+- Classes: PascalCase
+- Interfaces: PascalCase and start with I
+Examples:
+UserManager, IRepository
+
+4.2. Methods
+- Methods use action-based names (verbs).
+Examples: LoadData(), CreateOrder(), ValidateInput()
+
+4.3. Private Fields
+- Use camelCase
+Example: int retryCount;
+
+5. Comment Policy (Important for AI)
+- The AI must not write comments unless explicitly asked to do so.
+- No automatic comments
+- No XML documentation
+- No inline hints
+- No explanatory comments
+
+(Only include comments if the user specifically requests them.)
+
+6. Code Organization
+- One class per file.
+- File name must match the class name.
+
+7. Exception & Error Handling
+- Exceptions should only be used for exceptional cases.
+- Do not use try/catch for normal control flow.
+- If a method can fail in normal execution, return a status result (bool, TryX() pattern).
+
+8. Asynchronous Code
+- Async methods end with the suffix Async:
+
+public async Task LoadDataAsync() {
+    // ...
+}
+
+9. Method Responsibility Rule
+Each method must have only one reason to change.
+(This is the Single Responsibility Principle applied at the method level.)
+
+- A method should do exactly one specific task.
+- If a method handles multiple responsibilities, it must be split into smaller methods.
+- No method should contain unrelated logic combined together.
+
+✔ Good:
+
+private int CalculateSum(int[] values) {
+    return values.Sum();
+}
+
+
+❌ Bad:
+One method performing calculation, logging, validation, and formatting.
+
+10. Example Code Following All Rules
+public class UserService {
+    private readonly IUserRepository userRepository;
+
+    public UserService(IUserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public User GetUser(int id) {
+        return userRepository.FindById(id);
+    }
+
+    private bool ValidateId(int id) {
+        return id > 0;
+    }
+}
